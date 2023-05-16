@@ -1,16 +1,33 @@
 import 'dart:math';
 
 class ArrayMax {
-  static showMaxArrayValue() {
-    List<int> values = [25, 5, 12, 44, 123, 1, 2];
-    int maxValue = 0;
-    for (int i = 0; i < values.length; i++) {
-      maxValue = max(maxValue, values[i]);
+  static int findMaxUnderBoundary(
+      {required List<int> array, required int topBoundary}) {
+
+    int currentMax = -double.maxFinite.toInt();
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] < topBoundary) {
+        currentMax = max(currentMax, array[i]);
+      }
     }
-    print(maxValue);
+
+    return currentMax;
+  }
+
+  static List<int> findTopElements(
+      {required List<int> array, required int numberOfElements}) {
+    List<int> resList = List<int>.filled(numberOfElements, 0);
+    int prevMax = double.maxFinite.toInt();
+    for (int i = 0; i < numberOfElements; i++) {
+      int currMax = findMaxUnderBoundary(array: array, topBoundary: prevMax);
+      prevMax = currMax;
+      resList[i] = currMax;
+    }
+    return resList;
   }
 }
 
 void main() {
-  ArrayMax.showMaxArrayValue();
+  print(ArrayMax.findTopElements(
+      array: [10, 40, 50, 60, 22, 11], numberOfElements: 3));
 }
