@@ -2,9 +2,9 @@ class BinarySearch {
   static int binarySearch(List<int> array, int search) {
     int left = 0;
     int right = array.length - 1;
-    int middle = ((left + right) / 2).floor();
 
     while (left <= right) {
+      int middle = ((left + right) / 2).floor();
       if (array[middle] < search) {
         left = middle + 1;
       } else if (middle > search) {
