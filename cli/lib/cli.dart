@@ -1,25 +1,45 @@
-class BinarySearch {
-  static int binarySearch(List<int> array, int search) {
-    int left = 0;
-    int right = array.length - 1;
+class ArrayShift {
+  static int removeElementAtIndex(List<int> array, int index) {
+    for (int i = index + 1; i < array.length; i++) {
+      array[i - 1] = array[i];
+    }
+    return array.length - 1;
+  }
 
-    while (left <= right) {
-      int middle = ((left + right) / 2).floor();
-      if (array[middle] < search) {
-        left = middle + 1;
-      } else if (middle > search) {
-        right = middle - 1;
+  static int removeDuplicates(List<int> array) {
+    int length = array.length;
+    int i = 0;
+    while (i < length) {
+      bool isFound = false;
+      for (int k = i + 1; k < length; k++) {
+        if (array[i] == array[k]) {
+          isFound = true;
+          break;
+        }
+      }
+
+      if (isFound == false) {
+        i++;
+        continue;
       } else {
-        return middle;
+        for (int j = i + 1; j < length; j++) {
+          array[j - 1] = array[j];
+        }
+        length--;
       }
     }
-    return -1;
+    array.length = length;
+    return length;
   }
 }
 
 void main() {
-  final index = BinarySearch.binarySearch(
-      [1, 2, 3, 4, 5, 10, 22, 33, 44, 55, 66, 77, 88, 99, 100], 10);
+  final array = [1, 2, 3, 4, 5, 10, 22, 33, 44, 55, 66, 77, 88, 99, 100];
+  final length = ArrayShift.removeElementAtIndex(array, 10);
+  // print(length);
+  // print(array);
 
-  print(index);
+  final assignations = [1, 1, 1, 4, 5, 1, 6, 7, 8, 9, 10, 1];
+  final assignationsLength = ArrayShift.removeDuplicates(assignations);
+  print(assignations);
 }
